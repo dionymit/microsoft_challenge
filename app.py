@@ -32,7 +32,7 @@ def db():
     my_cursor.execute('SELECT * FROM accounts;')
     myresult = my_cursor.fetchall()
     return myresult
-@app.route('/db')
+@app.route('/tracks')
 def db():
     my_cursor.execute('SELECT * FROM tracks;')
     myresult = my_cursor.fetchall()
