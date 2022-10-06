@@ -17,10 +17,10 @@ my_cursor = conn.cursor()
 
 @app.route('/filldb')
 def filldb():
-    f = open("out_r1_v3.txt", "r")
+    f = open("out_r1_v1.txt", "r")
     for x in f:
-        print(x)
-        my_cursor.execute(x)
+        print(x + ";")
+        my_cursor.execute(x+ ";")
 
     my_cursor.execute('SELECT * FROM tracks;')
     myresult = my_cursor.fetchall()
