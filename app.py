@@ -68,8 +68,11 @@ def routes():
 
 @app.route('/partner')
 def partner():
-    pkl.load('./ai/model.pkl')
     
+    with open('./ai/model.pkl', 'rb') as f:
+        model = pkl.load(f)
+
+    model.predict([1,1])
     print('Request for partner page received')
     return render_template('partner.html')
 
