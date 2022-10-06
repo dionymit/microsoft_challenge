@@ -33,7 +33,7 @@ def db():
     myresult = my_cursor.fetchall()
     return myresult
 @app.route('/tracks')
-def db():
+def tracks():
     my_cursor.execute('SELECT * FROM tracks;')
     myresult = my_cursor.fetchall()
     return myresult
