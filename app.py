@@ -5,27 +5,6 @@ app = Flask(__name__)
 import mysql.connector
 from mysql.connector import errorcode
 
-config = {
-  'host':'aiyoungsters.mysql.database.azure.com',
-  'user':'aiyoungsters',
-  'password':'AI12345#',
-  'database':'community',
-  'client_flags': [mysql.connector.ClientFlag.SSL],
-  'ssl_ca': 'DigiCertGlobalRootG2.crt.pem'
-}  
-conn = mysql.connector.connect(**config)
-print("Connection established")
-
-my_cursor = conn.cursor()
-
-@app.route('/db')
-def db():
-    my_cursor.execute('SELECT * FROM accounts;')
-    myresult = my_cursor.fetchall()
-    for x in myresult:
-        print(x)
-    return myresult
-
 @app.route('/')
 def index():
    print('Request for index page received')
