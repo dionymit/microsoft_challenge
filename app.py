@@ -5,6 +5,7 @@ app = Flask(__name__)
 import mysql
 import mysql.connector
 
+
 config = {
   'host':'aiyoungsters.mysql.database.azure.com',
   'user':'aiyoungsters',
