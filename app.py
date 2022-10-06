@@ -1,9 +1,10 @@
 from datetime import datetime
+import pkgutil
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import os
 app = Flask(__name__)
 import psycopg2
-
+import pickle as pkl
 
 conn = psycopg2.connect(database = "community", user = "aiyoungsters", password = "AI12345#", 
 host = "aiyoungsters.postgres.database.azure.com", port = "5432", sslmode='require')
@@ -67,6 +68,8 @@ def routes():
 
 @app.route('/partner')
 def partner():
+    pkl.load('./ai/model.pkl')
+    
     print('Request for partner page received')
     return render_template('partner.html')
 
