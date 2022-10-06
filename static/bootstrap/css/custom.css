@@ -90,6 +90,17 @@ header {
   grid-auto-rows: 600px;
 }
 
+/* Wrapper for auto sorting grid*/
+.wrapper2 {
+  margin-left: 30px;
+  background-color: #eeeeee;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  grid-auto-rows: 600px;
+}
+
 /* Map css*/
 #myMap {
   width: 100%;
