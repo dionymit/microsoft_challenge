@@ -61,7 +61,16 @@ def favicon():
 @app.route('/routes', methods=['GET','POST'])
 def routes():
     print('Request for routes page received')
+    if request.method=="POST":
+        return redirect(url_for('partner'))
     return render_template('route.html')
+
+@app.route('/partner')
+def partner():
+    print('Request for partner page received')
+    return render_template('partner.html')
+
+
 
 
 if __name__ == '__main__':
