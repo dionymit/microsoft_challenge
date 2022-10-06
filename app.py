@@ -1,9 +1,24 @@
 from datetime import datetime
+import mysql.connector
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import os
 app = Flask(__name__)
 
+my_db = mysql.connector.connect(
+    user="aiyoungsters", password="AI12345#", ssl_verify_cert= True,
+    host="aiyoungsters.mysql.database.azure.com", port=3306,  ssl_ca="cert.pem",
+    database="community", ssl_ca="DigiCertGlobalRootCA.crt.pem"
+)
+my_cursor = my_db.cursor()
 
+@app.route('/db')
+def db():
+    my_cursor.execute('SELECT * FROM accounts;')
+    myresult = my_cursor.fetchall()
+    for x in myresult:
+        print(x)
+    return myresult
+    
 @app.route('/')
 def index():
    print('Request for index page received')
