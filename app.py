@@ -20,8 +20,7 @@ def filldb(a1,a2):
     f = open(f"out_r{a1}_v{a2}.txt", "r")
     for x in f:
         print(x + ";")
-        
-        my_cursor.execute(x+ ";")
+        my_cursor.execute(x)
         conn.commit()
 
     my_cursor.execute('SELECT * FROM tracks;')
@@ -31,14 +30,14 @@ def filldb(a1,a2):
 
 @app.route('/db')
 def db():
-    my_cursor.execute('SELECT * FROM accounts;')
+    my_cursor.execute('SELECT * FROM routes RIGHT JOIN tracks ON routes.track_id=tracks.id;')
     myresult = my_cursor.fetchall()
     return myresult
 
 @app.route('/test')
 def test():
     my_cursor.execute('INSERT INTO tracks (routeid,latitude, longtitude, timestamp) VALUES (1,50.3997,7.61319,1665063757)')
-
+    conn.commit()
     return "YO"
 @app.route('/tracks')
 def tracks():
