@@ -5,6 +5,7 @@ app = Flask(__name__)
 import mysql.connector
 from mysql.connector import errorcode
 
+
 @app.route('/')
 def index():
    print('Request for index page received')
