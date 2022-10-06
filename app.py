@@ -70,17 +70,21 @@ def routes():
 
 @app.route('/partner')
 def partner():
+    return render_template('partner.html')
+
+@app.route('/partner_prediction')
+def partner_prediction():
     with open('./ai/model.pkl', 'rb') as f:
         model = pkl.load(f)
 
     df = pd.DataFrame(columns=['distance', 'duration'])
     df = df.append({'distance':10, 'duration':60}, ignore_index=True)
-    #print(df)
     predict = model.predict(df)
+    my_cursor.execute('SELECT * FROM accounts WHERE id={predict[0]};')
     print(f'predict {predict}' )
     print('Request for partner page received')
-    return render_template('partner.html')
-
+    myresult = my_cursor.fetchall()
+    return myresult
 
 
 if __name__ == '__main__':
