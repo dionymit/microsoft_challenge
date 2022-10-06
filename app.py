@@ -28,22 +28,25 @@ def filldb(a1,a2):
     return myresult
 
 
+@app.route('/routes_all')
+def routes_all():
+    my_cursor.execute('SELECT COUNT(*), route_name,MAX(track_id),MAX(distance) ,AVG(duration) FROM routes GROUP BY route_name;')
+    myresult = my_cursor.fetchall()
+    return myresult
+
+@app.route('/tracks/<id>')
+def tracks(id):
+    my_cursor.execute(f'SELECT latitude,longtitude FROM tracks WHERE routeid={id};')
+    myresult = my_cursor.fetchall()
+    return myresult
+
+
 @app.route('/db')
 def db():
     my_cursor.execute('SELECT * FROM tracks JOIN routes ON tracks.routeid=routes.track_id;')
     myresult = my_cursor.fetchall()
     return myresult
 
-@app.route('/test')
-def test():
-    my_cursor.execute('INSERT INTO tracks (routeid,latitude, longtitude, timestamp) VALUES (1,50.3997,7.61319,1665063757)')
-    conn.commit()
-    return "YO"
-@app.route('/tracks')
-def tracks():
-    my_cursor.execute('SELECT * FROM tracks;')
-    myresult = my_cursor.fetchall()
-    return myresult
 
 @app.route('/')
 def home():

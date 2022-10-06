@@ -15,7 +15,67 @@
   <script>
     var map, datasource, client;
 
+    function httpGet(theUrl)
+    {
+        let xmlhttp;
+        
+        if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+        } else { // code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                return xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", theUrl, false);
+        xmlhttp.send();
+        
+        return xmlhttp.response;
+    }
     function GetMap() {
+      var xmlhttp=new XMLHttpRequest();
+       //Instantiate a map object
+       
+
+      var r =JSON.parse(httpGet('/routes_all'));
+      console.log(r.length)
+      console.log(r)
+      var items = ""
+      for(var id=0;id<3;id++){
+          items+="<div class=\"item\">\n" +
+            "            <h5>" +r[id][1]+ "</h5>\n" +
+            " <div id='myMap'></div>"+
+            "            <br />\n" +
+            "            <br />\n" +
+            "            <header>\n" +
+            "              <h6>Distance: "+r[id][3]+" km </h6>\n" +
+            "            </header>\n" +
+            "            <header>\n" +
+            "              <h6>Avg Duration: "+parseInt(r[id][4])+" min</h6>\n" +
+            "            </header>\n" +
+            "            <br />\n" +
+            "            <div class=\"col text-center\">\n" +
+            "              <button class=\"btn btn-primary\">Select</button>\n" +
+            "            </div>\n" +
+            "          </div>"
+      }
+      
+      document.getElementById('items_wrap').innerHTML = items;
+
+      var map = new atlas.Map("myMap", {
+                authOptions: {
+                  authType: "subscriptionKey",
+                  subscriptionKey:
+                    "lt6fNUPI6BbX8P-8NEZgH7Abs-8B0L_KQFO8rnVbM5I",
+                }
+              });
+
+      //var titleList =httpGet('/tracks/3');
+      //console.log("titleList")
+     // console.log(titleList)
       //Add Map Control JavaScript code here.
       //Wait until the map resources are ready.
       map.events.add("ready", function () {
@@ -200,71 +260,9 @@
       </div>
       <!-- Display Routes-->
       <div class="container">
-        <div class="wrapper">
-          <div class="item">
-            <h5>Route Name: 1</h5>
-            <div id="myMap"></div>
-            <script>
-              //Instantiate a map object
-              var map = new atlas.Map("myMap", {
-                // Replace <Your Azure Maps Key> with your Azure Maps primary subscription key. https://aka.ms/am-primaryKey
-                authOptions: {
-                  authType: "subscriptionKey",
-                  subscriptionKey:
-                    "lt6fNUPI6BbX8P-8NEZgH7Abs-8B0L_KQFO8rnVbM5I",
-                },
-              });
-            </script>
-            <br />
-            <br />
-            <header>
-              <h6>Distance: DB_PLACEHOLDER</h6>
-            </header>
-            <header>
-              <h6>Duration: DB_PLACEHOLDER</h6>
-            </header>
-            <br />
-            <div class="col text-center">
-              <a
-                href="{{ url_for('routes') }}"
-                class="btn btn-primary"
-                style="width: 80px"
-                >Start</a
-              >
-            </div>
-          </div>
-          <div class="item">
-            <h5>Route Name: 2</h5>
-            <img src="{{ url_for('static', filename='images/route1.png') }}" />
-            <br />
-            <br />
-            <header>
-              <h6>Distance: DB_PLACEHOLDER</h6>
-            </header>
-            <header>
-              <h6>Duration: DB_PLACEHOLDER</h6>
-            </header>
-            <br />
-            <div class="col text-center">
-              <button class="btn btn-primary">Select</button>
-            </div>
-          </div>
-          <div class="item">
-            <h5>Route Name: 3</h5>
-            <img src="{{ url_for('static', filename='images/route1.png') }}" />
-            <br />
-            <br />
-            <header>
-              <h6>Distance: DB_PLACEHOLDER</h6>
-            </header>
-            <header>
-              <h6>Duration: DB_PLACEHOLDER</h6>
-            </header>
-            <br />
-            <div class="col text-center">
-              <button class="btn btn-primary">Select</button>
-            </div>
-          </div>
+        <div class="wrapper" id="items_wrap">
+          
+          
         </div>
       </div>
       <br />
