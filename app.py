@@ -81,7 +81,7 @@ def partner_prediction():
     df = df.append({'distance':10, 'duration':60}, ignore_index=True)
     predict = model.predict(df)
     #print(predict)
-    my_cursor.execute(f'SELECT * FROM accounts WHERE id={predict[0]};')
+    my_cursor.execute(f'SELECT accounts.*, AVG(distance),AVG(duration) FROM accounts LEFT JOIN routes ON routes.account_id=accounts.id WHERE accounts.id={predict[0]} GROUP BY accounts.id; ')
     print(f'predict {predict}' )
     myresult = my_cursor.fetchall()
     return myresult
