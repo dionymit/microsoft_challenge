@@ -1,6 +1,178 @@
 <!DOCTYPE html>
 <head>
   <title>Select Route</title>
+  <!-- Add references to the Azure Maps Map control JavaScript and CSS files. -->
+  <link
+    rel="stylesheet"
+    href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css"
+    type="text/css"
+  />
+  <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+
+  <!-- Add a reference to the Azure Maps Services Module JavaScript file. -->
+  <script src="https://atlas.microsoft.com/sdk/javascript/service/2/atlas-service.min.js"></script>
+
+  <script>
+    var map, datasource, client;
+
+    function GetMap() {
+      //Add Map Control JavaScript code here.
+      //Wait until the map resources are ready.
+      map.events.add("ready", function () {
+        //Create a data source and add it to the map.
+        datasource = new atlas.source.DataSource();
+        map.sources.add(datasource);
+
+        //Add a layer for rendering the route lines and have it render under the map labels.
+        map.layers.add(
+          new atlas.layer.LineLayer(datasource, null, {
+            strokeColor: "#2272B9",
+            strokeWidth: 5,
+            lineJoin: "round",
+            lineCap: "round",
+          }),
+          "labels"
+        );
+
+        //Add a layer for rendering point data.
+        map.layers.add(
+          new atlas.layer.SymbolLayer(datasource, null, {
+            iconOptions: {
+              image: ["get", "icon"],
+              allowOverlap: true,
+            },
+            textOptions: {
+              textField: ["get", "title"],
+              offset: [0, 1.2],
+            },
+            filter: [
+              "any",
+              ["==", ["geometry-type"], "Point"],
+              ["==", ["geometry-type"], "MultiPoint"],
+            ], //Only render Point or MultiPoints in this layer.
+          })
+        );
+        var arraycoor = [
+          [7.69107, 50.40497],
+          [7.68647, 50.40408],
+          [7.68285, 50.40307],
+          [7.68174, 50.4021],
+          [7.67889, 50.40198],
+          [7.67582, 50.40096],
+          [7.6739, 50.40177],
+          [7.67149, 50.40234],
+          [7.66798, 50.40196],
+          [7.6661, 50.4009],
+          [7.66369, 50.40002],
+          [7.66071, 50.40072],
+          [7.658, 50.40167],
+          [7.65507, 50.40235],
+          [7.65314, 50.40265],
+          [7.651, 50.40319],
+          [7.64817, 50.40414],
+          [7.64611, 50.40442],
+          [7.64432, 50.40361],
+          [7.64243, 50.40194],
+          [7.64002, 50.40162],
+          [7.63805, 50.40228],
+          [7.63661, 50.40284],
+          [7.63436, 50.40375],
+          [7.63101, 50.40375],
+          [7.62762, 50.40315],
+          [7.62676, 50.4043],
+          [7.62758, 50.40601],
+          [7.62768, 50.40772],
+          [7.62888, 50.40898],
+          [7.62891, 50.41048],
+          [7.63146, 50.41155],
+          [7.63391, 50.4126],
+          [7.63544, 50.41485],
+          [7.63707, 50.41557],
+          [7.63613, 50.4174],
+          [7.63602, 50.4191],
+          [7.6378, 50.42078],
+          [7.64005, 50.42186],
+          [7.64108, 50.42178],
+          [7.6433, 50.42105],
+          [7.64504, 50.42184],
+          [7.64591, 50.42294],
+          [7.64693, 50.42417],
+          [7.64954, 50.42696],
+          [7.65132, 50.42955],
+          [7.65286, 50.42972],
+          [7.6546, 50.42842],
+          [7.6571, 50.42766],
+          [7.65814, 50.42656],
+          [7.65965, 50.42574],
+          [7.6618, 50.42569],
+          [7.66397, 50.42479],
+          [7.66612, 50.42375],
+          [7.67405, 50.42561],
+          [7.67755, 50.42588],
+          [7.68065, 50.42493],
+          [7.68144, 50.42358],
+          [7.6836547, 50.4221566],
+          [7.68621, 50.42069],
+          [7.6883, 50.41883],
+          [7.68999, 50.41492],
+          [7.69091, 50.41336],
+          [7.69147, 50.41197],
+          [7.69191, 50.40973],
+          [7.68905, 50.4083],
+          [7.69094, 50.40794],
+          [7.69265, 50.40771],
+          [7.69182, 50.40668],
+          [7.69033, 50.40593],
+        ];
+        var datapoints = [];
+
+        for (var x = 0; x < arraycoor.length; x++) {
+          //Create the GeoJSON objects which represent the start and end points of the route.
+          var Point = new atlas.data.Feature(
+            new atlas.data.Point(arraycoor[x]),
+            {
+              title: "",
+              //icon: "pin-blue"
+            }
+          );
+          datapoints.push(Point);
+        }
+
+        //Add the data to the data source.
+        datasource.add(datapoints);
+        var startPoint = datapoints[0];
+        var endPoint = datapoints[datapoints.length - 1];
+
+        map.setCamera({
+          bounds: atlas.data.BoundingBox.fromData([startPoint, endPoint]),
+          padding: 80,
+        });
+
+        //Use MapControlCredential to share authentication between a map control and the service module.
+        var pipeline = atlas.service.MapsURL.newPipeline(
+          new atlas.service.MapControlCredential(map)
+        );
+
+        //Construct the RouteURL object
+        var routeURL = new atlas.service.RouteURL(pipeline);
+
+        //Start and end point input to the routeURL
+        //var coordinates= [[startPoint.geometry.coordinates[0], startPoint.geometry.coordinates[1]], [endPoint.geometry.coordinates[0], endPoint.geometry.coordinates[1]]];
+        console.log(arraycoor);
+        //Make a search route request
+        routeURL
+          .calculateRouteDirections(
+            atlas.service.Aborter.timeout(10000),
+            arraycoor
+          )
+          .then((directions) => {
+            //Get data features from response
+            var data = directions.geojson.getFeatures();
+            datasource.add(data);
+          });
+      });
+    }
+  </script>
   <link
     rel="stylesheet"
     href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"
@@ -15,7 +187,7 @@
   />
 </head>
 <html>
-  <body>
+  <body onload="GetMap()">
     <main>
       <!-- Step 1 -->
       <div class="col text-center">
@@ -31,7 +203,18 @@
         <div class="wrapper">
           <div class="item">
             <h5>Route Name: 1</h5>
-            <img src="{{ url_for('static', filename='images/route1.png') }}" />
+            <div id="myMap"></div>
+            <script>
+              //Instantiate a map object
+              var map = new atlas.Map("myMap", {
+                // Replace <Your Azure Maps Key> with your Azure Maps primary subscription key. https://aka.ms/am-primaryKey
+                authOptions: {
+                  authType: "subscriptionKey",
+                  subscriptionKey:
+                    "lt6fNUPI6BbX8P-8NEZgH7Abs-8B0L_KQFO8rnVbM5I",
+                },
+              });
+            </script>
             <br />
             <br />
             <header>
