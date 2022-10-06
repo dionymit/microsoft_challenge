@@ -15,9 +15,9 @@ my_cursor = conn.cursor()
 #CREATE DATABASE routs (id int NOT NULL AUTO_INCREMENT, route_name VARCHAR(1000), account_id int, track_id int, favorite bool, PRIMARY KEY(id))
 #CREATE DATABASE accounts (id int NOT NULL AUTO_INCREMENT, name VARCHAR(1000), mail VARCHAR(1000), PRIMARY KEY(id))
 
-@app.route('/filldb')
-def filldb():
-    f = open("out_r1_v1.txt", "r")
+@app.route('/filldb/<a1>/<a2>')
+def filldb(a1,a2):
+    f = open(f"out_r{a1}_v{a2}.txt", "r")
     for x in f:
         print(x + ";")
         my_cursor.execute(x+ ";")
