@@ -2,22 +2,18 @@ from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import os
 app = Flask(__name__)
-import mysql
-import mysql.connector
+import psycopg2
 
 
-config = {
-  'host':'aiyoungsters.mysql.database.azure.com',
-  'user':'aiyoungsters',
-  'password':'AI12345#',
-  'database':'community',
-  'client_flags': [mysql.connector.ClientFlag.SSL],
-  'ssl_ca': 'DigiCertGlobalRootG2.crt.pem'
-}  
-conn = mysql.connector.connect(**config)
-print("Connection established")
+conn = psycopg2.connect(user = "aiyoungsters", password = "AI12345#", 
+host = "aiyoungsters.postgres.database.azure.com", port = "5432",sslmode='require')
+print("Opened database successfully")#database = "postgres", 
 
 my_cursor = conn.cursor()
+
+#CREATE DATABASE tracks (id int NOT NULL AUTO_INCREMENT, routeid int, latitude float, longtitude float, timestamp int, PRIMARY KEY(id))
+#CREATE DATABASE routs (id int NOT NULL AUTO_INCREMENT, route_name VARCHAR(1000), account_id int, track_id int, favorite bool, PRIMARY KEY(id))
+#CREATE DATABASE accounts (id int NOT NULL AUTO_INCREMENT, name VARCHAR(1000), mail VARCHAR(1000), PRIMARY KEY(id))
 
 @app.route('/filldb')
 def filldb():
