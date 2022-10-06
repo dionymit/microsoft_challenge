@@ -30,7 +30,7 @@ def filldb(a1,a2):
 
 @app.route('/db')
 def db():
-    my_cursor.execute('SELECT * FROM routes RIGHT JOIN tracks ON routes.track_id=tracks.id;')
+    my_cursor.execute('SELECT * FROM tracks JOIN routes ON tracks.routeid=routes.track_id;')
     myresult = my_cursor.fetchall()
     return myresult
 
