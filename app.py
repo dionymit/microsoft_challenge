@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 my_db = mysql.connector.connect(
     user="aiyoungsters", password="AI12345#",
-    host="aiyoungsters.mysql.database.azure.com", port=3306, 
+    host="aiyoungsters.mysql.database.azure.com", port=3306,  ssl_ca="DigiCertGlobalRootG2.crt",
     database="community"
 )
 my_cursor = my_db.cursor()
