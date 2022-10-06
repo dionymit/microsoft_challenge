@@ -5,9 +5,9 @@ app = Flask(__name__)
 import psycopg2
 
 
-conn = psycopg2.connect(user = "aiyoungsters", password = "AI12345#", 
-host = "aiyoungsters.postgres.database.azure.com", port = "5432",sslmode='require')
-print("Opened database successfully")#database = "postgres", 
+conn = psycopg2.connect(database = "community", user = "aiyoungsters", password = "AI12345#", 
+host = "aiyoungsters.postgres.database.azure.com", port = "5432", sslmode='require')
+print("Opened database successfully")
 
 my_cursor = conn.cursor()
 
