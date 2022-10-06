@@ -22,8 +22,6 @@ my_cursor = conn.cursor()
 def db():
     my_cursor.execute('SELECT * FROM accounts;')
     myresult = my_cursor.fetchall()
-    for x in myresult:
-        print(x)
     return myresult
 
 @app.route('/')
