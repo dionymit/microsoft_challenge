@@ -1,2 +1,5 @@
 Flask==2.2.2
+
 mysql-connector==2.2.9
+
+mysql_connector_repackaged==0.3.1
