@@ -17,8 +17,8 @@ print("Connection established")
 
 my_cursor = conn.cursor()
 
-@app.route('/creatne')
-def db2():
+@app.route('/filldb')
+def filldb():
     my_cursor.execute('SELECT * FROM accounts;')
     myresult = my_cursor.fetchall()
     return myresult
