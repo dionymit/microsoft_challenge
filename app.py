@@ -36,7 +36,7 @@ def routes_all():
 
 @app.route('/tracks/<id>')
 def tracks(id):
-    my_cursor.execute(f'SELECT latitude,longtitude FROM tracks WHERE routeid={id};')
+    my_cursor.execute(f'SELECT longtitude,latitude FROM tracks WHERE routeid={id};')
     myresult = my_cursor.fetchall()
     return myresult
 
