@@ -1,15 +1,21 @@
 from datetime import datetime
-import mysql.connector
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import os
 app = Flask(__name__)
+import mysql.connector
+from mysql.connector import errorcode
 
-my_db = mysql.connector.connect(
-    user="aiyoungsters", password="AI12345#",
-    host="aiyoungsters.mysql.database.azure.com", port=3306,  ssl_ca="DigiCertGlobalRootG2.crt.pem",
-    database="community"
-)
-my_cursor = my_db.cursor()
+config = {
+  'host':'aiyoungsters.mysql.database.azure.com',
+  'user':'aiyoungsters',
+  'password':'AI12345',
+  'database':'community',
+  'client_flags': [mysql.connector.ClientFlag.SSL],
+  'ssl_ca': 'DigiCertGlobalRootG2.crt.pem'
+}
+
+conn = mysql.connector.connect(**config)
+my_cursor = conn.cursor()
 
 @app.route('/db')
 def db():
