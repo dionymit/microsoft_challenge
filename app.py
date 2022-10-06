@@ -5,6 +5,8 @@ import os
 app = Flask(__name__)
 import psycopg2
 import pickle as pkl
+import numpy as np
+import pandas as pd
 
 conn = psycopg2.connect(database = "community", user = "aiyoungsters", password = "AI12345#", 
 host = "aiyoungsters.postgres.database.azure.com", port = "5432", sslmode='require')
@@ -68,14 +70,16 @@ def routes():
 
 @app.route('/partner')
 def partner():
-    
     with open('./ai/model.pkl', 'rb') as f:
         model = pkl.load(f)
 
-    #model.predict([1,1])
+    df = pd.DataFrame(columns=['distance', 'duration'])
+    df = df.append({'distance':10, 'duration':60}, ignore_index=True)
+    #print(df)
+    predict = model.predict(df)
+    print(f'predict {predict}' )
     print('Request for partner page received')
     return render_template('partner.html')
-
 
 
 
