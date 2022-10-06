@@ -3,7 +3,6 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 import os
 app = Flask(__name__)
 import mysql.connector
-from mysql.connector import errorcode
 
 config = {
   'host':'aiyoungsters.mysql.database.azure.com',
@@ -17,6 +16,13 @@ conn = mysql.connector.connect(**config)
 print("Connection established")
 
 my_cursor = conn.cursor()
+
+
+@app.route('/create')
+def db():
+    my_cursor.execute('SELECT * FROM accounts;')
+    myresult = my_cursor.fetchall()
+    return myresult
 
 @app.route('/db')
 def db():
