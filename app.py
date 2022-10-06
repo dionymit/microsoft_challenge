@@ -19,7 +19,12 @@ my_cursor = conn.cursor()
 
 @app.route('/filldb')
 def filldb():
-    my_cursor.execute('SELECT * FROM accounts;')
+    f = open("out_r1_v3.txt", "r")
+    for x in f:
+        print(x)
+        my_cursor.execute(x)
+
+    my_cursor.execute('SELECT * FROM tracks;')
     myresult = my_cursor.fetchall()
     return myresult
 
