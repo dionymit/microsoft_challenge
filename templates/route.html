@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<head>
+  <title>Select Route</title>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"
+  />
+  <link
+    rel="shortcut icon"
+    href="{{ url_for('static', filename='favicon.ico') }}"
+  />
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='bootstrap/css/custom.css') }}"
+  />
+</head>
+<html>
+  <body>
+    <main>
+      <!-- Step 1 -->
+      <div class="col text-center">
+        <br />
+        <br />
+        <h1 class="display-15 fw-bold text-primary">Step 1</h1>
+        <h3>Select one of the recommended routes</h3>
+        <br />
+        <br />
+      </div>
+      <!-- Display Routes-->
+      <div class="container">
+        <div class="wrapper">
+          <div class="item">
+            <h5>Route Name: 1</h5>
+            <img src="{{ url_for('static', filename='images/route1.png') }}" />
+            <br />
+            <br />
+            <header>
+              <h6>Distance: DB_PLACEHOLDER</h6>
+            </header>
+            <header>
+              <h6>Duration: DB_PLACEHOLDER</h6>
+            </header>
+            <br />
+            <div class="col text-center">
+              <a
+                href="{{ url_for('routes') }}"
+                class="btn btn-primary"
+                style="width: 80px"
+                >Start</a
+              >
+            </div>
+          </div>
+          <div class="item">
+            <h5>Route Name: 2</h5>
+            <img src="{{ url_for('static', filename='images/route1.png') }}" />
+            <br />
+            <br />
+            <header>
+              <h6>Distance: DB_PLACEHOLDER</h6>
+            </header>
+            <header>
+              <h6>Duration: DB_PLACEHOLDER</h6>
+            </header>
+            <br />
+            <div class="col text-center">
+              <button class="btn btn-primary">Select</button>
+            </div>
+          </div>
+          <div class="item">
+            <h5>Route Name: 3</h5>
+            <img src="{{ url_for('static', filename='images/route1.png') }}" />
+            <br />
+            <br />
+            <header>
+              <h6>Distance: DB_PLACEHOLDER</h6>
+            </header>
+            <header>
+              <h6>Duration: DB_PLACEHOLDER</h6>
+            </header>
+            <br />
+            <div class="col text-center">
+              <button class="btn btn-primary">Select</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <br />
+    </main>
+  </body>
+</html>

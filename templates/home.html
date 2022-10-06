@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<head>
+  <title>Home</title>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"
+  />
+  <link
+    rel="shortcut icon"
+    href="{{ url_for('static', filename='favicon.ico') }}"
+  />
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='bootstrap/css/custom.css') }}"
+  />
+</head>
+<html>
+  <body>
+    <main>
+      <div class="container-img">
+        <!-- Title with image-->
+        <img
+          src="{{ url_for('static', filename='images/running.png') }}"
+          alt="run"
+          style="width: 100%"
+        />
+        <div class="centered">
+          <h1 style="color: rgb(209, 209, 209); font-size: 55px">
+            Welcome to Contoso Sports!
+          </h1>
+          <br />
+          <h3 style="color: rgb(209, 209, 209)">
+            Connecting people through exercise
+          </h3>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="col text-center">
+          <br />
+          <br />
+          <h3 class="display-15 fw-bold text-primary">Step 1</h3>
+          <h5>
+            Our app will recommend you routes that match your profile. Please
+            start your exercise by selecting one of them.
+          </h5>
+          <br />
+          <br />
+
+          <h3 class="display-15 fw-bold text-primary">Step 2</h3>
+          <h5>
+            (Optional) In the second step you can choose a training partner from
+            your area that matches your training stats. You can select one of
+            them after you have selected a route.
+          </h5>
+          <br />
+          <a
+            href="{{ url_for('routes') }}"
+            class="btn btn-primary"
+            style="width: 80px"
+            >Start</a
+          >
+        </div>
+      </div>
+      <br />
+      <br />
+    </main>
+  </body>
+</html>
