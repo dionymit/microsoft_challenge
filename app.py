@@ -72,7 +72,7 @@ def partner():
     with open('./ai/model.pkl', 'rb') as f:
         model = pkl.load(f)
 
-    model.predict([1,1])
+    #model.predict([1,1])
     print('Request for partner page received')
     return render_template('partner.html')
 
