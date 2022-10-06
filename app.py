@@ -80,9 +80,9 @@ def partner_prediction():
     df = pd.DataFrame(columns=['distance', 'duration'])
     df = df.append({'distance':10, 'duration':60}, ignore_index=True)
     predict = model.predict(df)
-    my_cursor.execute('SELECT * FROM accounts WHERE id={predict[0]};')
+    #print(predict)
+    my_cursor.execute(f'SELECT * FROM accounts WHERE id={predict[0]};')
     print(f'predict {predict}' )
-    print('Request for partner page received')
     myresult = my_cursor.fetchall()
     return myresult
 
