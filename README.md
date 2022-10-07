@@ -1,7 +1,18 @@
-# Deploy a Python (Flask) web app to Azure App Service - Sample Application
+# AIYungsters present to you: Contoso spots
+We developed a smart west that guides you during your routes!<br>
+Our innovative integrated LEDs show the way for routes recommend to you. It tracks your routes and you can challenge people and celebreties. Those are recommend using our AI services based on duration and distance of similar routes.
 
-This is the sample Flask application for the Azure Quickstart [Deploy a Python (Django or Flask) web app to Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/quickstart-python).  For instructions on how to create the Azure resources and deploy the application to Azure, refer to the Quickstart article.
+# Team
+<img src="presentation/team.jpeg" style="width:300px"><br>
+Left to right: <br>
+Maximilian Studt<br>
+Dionysis Mitosios<br>
+Azur Causevic<br>
+Konrad Wehner <br>
+Thore Koritzius<br>
 
-A Django sample application is also available for the article at [https://github.com/Azure-Samples/msdocs-python-django-webapp-quickstart](https://github.com/Azure-Samples/msdocs-python-django-webapp-quickstart).
-
-If you need an Azure account, you can [create on for free](https://azure.microsoft.com/en-us/free/).
+# Software Stack
+The Backend utilitzes a python flask server connected to our PostrgreSQL.<br>
+There we deployed three databases: routes, tracks, accounts.<br>
+Our Model is exported as .pkl from the Azure ML container. We then do inference on it in our backend.<br>
+To simulate data from the user, he can select avg distance and duration and get a match<br>
