@@ -12,8 +12,10 @@ Azur Causevic<br>
 Konrad Wehner <br>
 Thore Koritzius<br>
 
+# Run
+Deployement worked locally, however, we have issues with the ML container remote.<br>
 # Images
-Deployement worked locally, however, we have issues with the ML container remote
+
 
 <img src="presentation/start.png" style="width:300px"><br>
 <img src="presentation/tracks.png" style="width:300px"><br>
