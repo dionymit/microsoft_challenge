@@ -31,6 +31,7 @@ def filldb(a1,a2):
     return myresult
 
 
+
 @app.route('/routes_all')
 def routes_all():
     my_cursor.execute('SELECT COUNT(*), route_name,MAX(track_id),MAX(distance) ,AVG(duration) FROM routes GROUP BY route_name;')
@@ -68,9 +69,23 @@ def routes():
         return redirect(url_for('partner'))
     return render_template('route.html')
 
-@app.route('/partner')
-def partner():
+curr_dist = 0
+curr_duration = 0
+@app.route('/partner/<distance>/<duration>')
+def partner(distance,duration):
+    global curr_dist
+    global curr_duration
+    curr_dist=distance
+    curr_duration=duration
     return render_template('partner.html')
+
+@app.route('/select_parameters')
+def select_parameters():
+    return render_template('select_parameters.html')
+    
+@app.route('/start_run')
+def start_run():
+    return render_template('start_run.html')
 
 @app.route('/partner_prediction')
 def partner_prediction():
@@ -78,10 +93,14 @@ def partner_prediction():
         model = pkl.load(f)
 
     df = pd.DataFrame(columns=['distance', 'duration'])
-    df = df.append({'distance':10, 'duration':60}, ignore_index=True)
-    predict = model.predict(df)
-    #print(predict)
-    my_cursor.execute(f'SELECT accounts.*, AVG(distance),AVG(duration) FROM accounts LEFT JOIN routes ON routes.account_id=accounts.id WHERE accounts.id={predict[0]} GROUP BY accounts.id; ')
+    print(curr_dist)
+    print(curr_duration)
+    df = df.append({'distance':curr_dist, 'duration':curr_duration}, ignore_index=True)
+    predict = model.predict(df)[0]
+    if predict ==0:
+        predict = 1
+    print(predict)
+    my_cursor.execute(f'SELECT accounts.*, AVG(distance),AVG(duration) FROM accounts LEFT JOIN routes ON routes.account_id=accounts.id WHERE accounts.id={predict} GROUP BY accounts.id; ')
     print(f'predict {predict}' )
     myresult = my_cursor.fetchall()
     return myresult

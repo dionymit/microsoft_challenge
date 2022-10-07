@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+  <title>Home</title>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"
+  />
+  <link
+    rel="shortcut icon"
+    href="{{ url_for('static', filename='favicon.ico') }}"
+  />
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='bootstrap/css/custom.css') }}"
+  />
+  <script>
+    
+    function httpGet(theUrl)
+    {
+        let xmlhttp;
+        
+        if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+        } else { // code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                return xmlhttp.responseText;
+            }
+        }
+        xmlhttp.open("GET", theUrl, false);
+        xmlhttp.send();
+        
+        return xmlhttp.response;
+    }
+    function slider(){
+      var r1 =  document.getElementById('customRange1').value;
+      var r2=  document.getElementById('customRange2').value;
+      window.location.href = 'partner/' + r1 +'/' + r2
+    }
+  </script>
+</head>
+<html>
+  <body>
+    <main>
+      <!-- Step 1 -->
+      <div class="col text-center">
+        <br />
+        <br />
+        <h1 class="display-15 fw-bold text-primary">Step 2</h1>
+
+        <div style="width: 50%;margin: 0 auto">
+        <h3>Choose your parameters</h3>
+        <label for="customRange1" class="form-label" min="0" max="50">Your average running distance (in km) per workout</label>
+        <input type="range" class="form-range" id="customRange1" oninput="this.nextElementSibling.value = this.value"><output>50 km</output><br><br>
+        <label for="customRange2" class="form-label"  min="0" max="180">Your average running duration (in min) per workout</label>
+        <input type="range" class="form-range" id="customRange2" oninput="this.nextElementSibling.value = this.value"><output>50 km</output>
+      </div>
+      </div>
+      <!-- Display Routes-->
+      <div class="labeling-container">
+        <input type="button" onclick="slider()" value="Select" class="btn btn-primary"/>
+      </div>
+    </main>
+  </body>
+</html>
