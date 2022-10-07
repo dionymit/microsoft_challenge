@@ -14,13 +14,16 @@ print("Opened database successfully")
 
 my_cursor = conn.cursor()
 
-#CREATE DATABASE tracks (id int NOT NULL AUTO_INCREMENT, routeid int, latitude float, longtitude float, timestamp int, PRIMARY KEY(id))
-#CREATE DATABASE routs (id int NOT NULL AUTO_INCREMENT, route_name VARCHAR(1000), account_id int, track_id int, favorite bool, PRIMARY KEY(id))
-#CREATE DATABASE accounts (id int NOT NULL AUTO_INCREMENT, name VARCHAR(1000), mail VARCHAR(1000), PRIMARY KEY(id))
+#3 Tables in hierachical order
+#CREATE TABLE tracks (id int NOT NULL AUTO_INCREMENT, routeid int, latitude float, longtitude float, timestamp int, PRIMARY KEY(id))
+#CREATE TABLE routs (id int NOT NULL AUTO_INCREMENT, route_name VARCHAR(1000), account_id int, track_id int, favorite bool, PRIMARY KEY(id))
+#CREATE TABLE accounts (id int NOT NULL AUTO_INCREMENT, name VARCHAR(1000), mail VARCHAR(1000), PRIMARY KEY(id))
 
+
+#populate the DB with track data
 @app.route('/filldb/<a1>/<a2>')
 def filldb(a1,a2):
-    f = open(f"out_r{a1}_v{a2}.txt", "r")
+    f = open(f"./track_data/out_r{a1}_v{a2}.txt", "r")
     for x in f:
         print(x + ";")
         my_cursor.execute(x)
@@ -98,7 +101,7 @@ def partner_prediction():
     df = df.append({'distance':curr_dist, 'duration':curr_duration}, ignore_index=True)
     predict = model.predict(df)[0]
     if predict ==0:
-        predict = 1
+        predict = 2
     print(predict)
     my_cursor.execute(f'SELECT accounts.*, AVG(distance),AVG(duration) FROM accounts LEFT JOIN routes ON routes.account_id=accounts.id WHERE accounts.id={predict} GROUP BY accounts.id; ')
     print(f'predict {predict}' )
@@ -107,4 +110,5 @@ def partner_prediction():
 
 
 if __name__ == '__main__':
-   app.run(debug=True)
+    
+   app.run(debug=False)
