@@ -85,7 +85,7 @@ def select_parameters():
     
 @app.route('/start_run')
 def start_run():
-    return render_template('start_run.html')
+    return render_template('run.html')
 
 @app.route('/partner_prediction')
 def partner_prediction():
