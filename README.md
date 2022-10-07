@@ -13,6 +13,7 @@ Konrad Wehner <br>
 Thore Koritzius<br>
 
 # Software Stack
+<img src="presentation/stack.png" style="width:500px"><br>
 The Backend utilitzes a python flask server connected to our PostrgreSQL.<br>
 There we deployed three databases: routes, tracks, accounts.<br>
 Our Model is exported as .pkl from the Azure ML container. We then do inference on it in our backend.<br>
