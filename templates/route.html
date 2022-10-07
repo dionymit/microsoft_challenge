@@ -41,7 +41,6 @@
       var xmlhttp=new XMLHttpRequest();
        //Instantiate a map object
        
-
       var r =JSON.parse(httpGet('/routes_all'));
       var items = ""
       for(var id=0;id<3;id++){
@@ -143,7 +142,7 @@
 
         map.setCamera({
           bounds: atlas.data.BoundingBox.fromData([startPoint, endPoint]),
-          padding: 80,
+          padding: 10,
         });
 
         //Use MapControlCredential to share authentication between a map control and the service module.
@@ -201,7 +200,9 @@
       </div>
       <div id='myMap' style="height: 300px"></div>
       <script>
-         var map = new atlas.Map(document.getElementById('myMap'), {
+         var map = new atlas.Map('myMap', {
+                 zoom: 9,
+                 center: [7.6051599,50.3998413],
                 authOptions: {
                   authType: "subscriptionKey",
                   subscriptionKey:

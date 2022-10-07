@@ -13,6 +13,10 @@
     rel="stylesheet"
     href="{{ url_for('static', filename='bootstrap/css/custom.css') }}"
   />
+  <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+
+  <!-- Add a reference to the Azure Maps Services Module JavaScript file. -->
+  <script src="https://atlas.microsoft.com/sdk/javascript/service/2/atlas-service.min.js"></script>
   <script>
     var cam_pos = [];
     var map, client;
@@ -41,50 +45,17 @@
     function GetMap() {
       var xmlhttp=new XMLHttpRequest();
        //Instantiate a map object
-       
-
-       map.events.add("ready", function () {
-        //Create a data source and add it to the map.
-        
-       // load_map_data(1);
-       map.sources.add(datasource);
-
-        //Add a layer for rendering the route lines and have it render under the map labels.
-        map.layers.add(
-          new atlas.layer.LineLayer(datasource, null, {
-            strokeColor: color,
-            strokeWidth: 5,
-            lineJoin: "round",
-            lineCap: "round",
-          }),
-          "labels"
-        );
-
-        map.layers.add(
-          new atlas.layer.SymbolLayer(datasource, null, {
-            iconOptions: {
-              image: ["get", "icon"],
-              allowOverlap: true,
-            },
-            textOptions: {
-              textField: ["get", "title"],
-              offset: [0, 1.2],
-            },
-            filter: [
-              "any",
-              ["==", ["geometry-type"], "Point"],
-              ["==", ["geometry-type"], "MultiPoint"],
-            ], //Only render Point or MultiPoints in this layer.
-          })
-        );
-
-        
-      });
-      //var titleList =httpGet('/tracks/3');
-      //console.log("titleList")
-     // console.log(titleList)
-      //Add Map Control JavaScript code here.
-      //Wait until the map resources are ready.
+      
+             var map = new atlas.Map('myMap', {
+                 center: [7.6051599,50.3998413],
+                 zoom: 12,
+                 language: 'en-US',
+                 authOptions: {
+                     authType: 'subscriptionKey',
+                     subscriptionKey: 'lt6fNUPI6BbX8P-8NEZgH7Abs-8B0L_KQFO8rnVbM5I'
+                 }
+             });
+         
      
     }
   </script>
@@ -99,15 +70,6 @@
         <h1 class="display-15 fw-bold text-primary">Lets Start your Challenge!</h1>
       </div>
       <div id='myMap' style="height: 300px"></div>
-      <script>
-         var map = new atlas.Map(document.getElementById('myMap'), {
-                authOptions: {
-                  authType: "subscriptionKey",
-                  subscriptionKey:
-                    "lt6fNUPI6BbX8P-8NEZgH7Abs-8B0L_KQFO8rnVbM5I",
-                }
-              });
-              </script>
       <!-- Display Routes-->
       <div class="labeling-container">
         
